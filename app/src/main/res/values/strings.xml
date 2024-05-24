@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="_1_polish_zloty_equals_to">1 Polish Zloty equals to</string>
+    <string name="pln_rates">PLN Rates</string>
+    <string name="euro_rates">Euro Rates</string>
+    <string name="_1_euro_equals_to">1 Euro equals to</string>
+</resources>
