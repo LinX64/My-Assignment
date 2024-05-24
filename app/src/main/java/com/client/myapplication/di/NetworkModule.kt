@@ -35,5 +35,7 @@ internal object NetworkModule {
                     },
             )
             .build()
+
+        // TODO: Consider a caching mechanism for the OkHttpClient
     }
 }
