@@ -22,6 +22,7 @@ class RatesRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource
 ) : RatesRepository {
 
+    // TODO: Consider using Offline-First approach to store the rates in the local database
     /**
      * This function fetches the PLN and Euro rates from the server and emits them every minute.
      * @return Flow<CurrencyRates> - a flow of CurrencyRates
