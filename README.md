@@ -32,7 +32,6 @@ I've used a custom Deserializer for the API response.
 
 - Auto retry on network failure
 - Scrollable content - compatible with any screen size
-- Edge-to-edge
 - Dark mode
 - Error handling
 - Loading state with Progress Bar
