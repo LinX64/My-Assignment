@@ -4,7 +4,7 @@
 
 This project is a simple Android application that displays the currency rates for PLN, and EURO,
 which is being refreshed every
-minutes. The API used for fetching the currency rates is the: https://www.exchangerate-api.com/
+minute. The API used for fetching the currency rates is: https://www.exchangerate-api.com/
 
 ## Tech Stack
 
@@ -19,6 +19,9 @@ minutes. The API used for fetching the currency rates is the: https://www.exchan
 I've also used one of my
 libraries, [Reusable Components for Jetpack Compose](https://github.com/LinX64/Reusable) to make the
 development faster.
+
+**Note**: To make the development faster and get rid of the Kotlin Serialization limits for objects,
+I've used a custom Deserializer for the API response. 
 
 ## Screenshots
 
