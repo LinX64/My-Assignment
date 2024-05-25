@@ -4,4 +4,5 @@
     <string name="pln_rates">PLN Rates</string>
     <string name="euro_rates">Euro Rates</string>
     <string name="_1_euro_equals_to">1 Euro equals to</string>
+    <string name="error_while_loading_data">Error while loading data: %1$s</string>
 </resources>

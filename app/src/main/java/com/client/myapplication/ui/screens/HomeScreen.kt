@@ -1,6 +1,7 @@
 package com.client.myapplication.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,7 +26,7 @@ import com.client.myapplication.ui.theme.MyApplicationTheme
 import com.client.reusablecomponents.containers.CenteredColumn
 import com.client.reusablecomponents.containers.ScrollableScreen
 import com.client.reusablecomponents.previews.AppScreenComponent
-import com.client.reusablecomponents.previews.MultiThemePreviews
+import com.client.reusablecomponents.previews.DevicePreviews
 
 @Composable
 internal fun HomeRoute(
@@ -43,7 +45,11 @@ internal fun HomeScreen(
     val shouldShouldContent = rememberSaveable { mutableStateOf(true) }
     if (shouldShouldContent.value) {
         ScrollableScreen {
-            CenteredColumn {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     text = stringResource(R.string.pln_rates),
                     style = MaterialTheme.typography.headlineMedium
@@ -132,15 +138,15 @@ private fun ErrorView(
     message: String
 ) {
     CenteredColumn {
-        Text(text = "Error while loading data: $message")
+        Text(text = stringResource(R.string.error_while_loading_data, message))
     }
 }
 
-@MultiThemePreviews
+@DevicePreviews
 @Composable
 private fun HomeScreenPreview() {
     AppScreenComponent {
-        MyApplicationTheme {
+        MyApplicationTheme(darkTheme = true) {
             HomeScreen(
                 rates = MainViewState.Success(
                     plnRates = listOf(
