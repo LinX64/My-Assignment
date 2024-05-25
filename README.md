@@ -22,8 +22,8 @@ development faster.
 
 ## Screenshots
 
-![vertical](screenshots/vertical.png)
-![horizontal](screenshots/horizontal.png)
+<img src="screenshots/vertical.png" width="300" height="600">
+<img src="screenshots/horizontal.png" width="600" height="300">
 
 ## Features
 
