@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -66,7 +67,8 @@ internal fun HomeScreen(
                     rows = GridCells.Fixed(1),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(170.dp),
+                        .height(170.dp)
+                        .testTag("list1"),
                     contentPadding = PaddingValues(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -99,7 +101,8 @@ internal fun HomeScreen(
                     rows = GridCells.Fixed(1),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(170.dp),
+                        .height(170.dp)
+                        .testTag("list2"),
                     contentPadding = PaddingValues(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -119,7 +122,7 @@ internal fun HomeScreen(
 
     when (rates) {
         is MainViewState.Loading -> CenteredColumn {
-            CircularProgressIndicator()
+            CircularProgressIndicator(modifier = Modifier.testTag("loading"))
         }
 
         is MainViewState.Error -> {
@@ -138,7 +141,10 @@ private fun ErrorView(
     message: String
 ) {
     CenteredColumn {
-        Text(text = stringResource(R.string.error_while_loading_data, message))
+        Text(
+            modifier = Modifier.testTag("error"),
+            text = stringResource(R.string.error_while_loading_data, message)
+        )
     }
 }
 

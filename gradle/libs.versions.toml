@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.1"
+junitJunit = "4.12"
 kotlin = "1.9.24"
 ksp = "1.9.24-1.0.20"
 coreKtx = "1.13.1"
@@ -20,12 +21,13 @@ kotlinxCoroutines = "1.8.1"
 kotlinxSerializationJson = "1.6.3"
 retrofit = "2.11.0"
 retrofitKotlinxSerializationJson = "1.0.0"
+gson = "2.8.8"
 
 # Test versions
-kluent = "1.73"
 mockito = "5.12.0"
 mockito-inline = "5.2.0"
 mockitoKotlin = "5.3.1"
+mockk = "1.13.2"
 turbine = "1.1.0"
 androidx-test-ext-junit = "1.1.5"
 androidxTestCore = "1.5.0"
@@ -33,6 +35,8 @@ androidxTestExt = "1.1.5"
 androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 junit4 = "4.13.2"
+kluentAndroid = "1.72"
+kotlinxCoroutinesTest = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,15 +56,20 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+junit-v412 = { module = "junit:junit", version.ref = "junitJunit" }
+kluent-android = { module = "org.amshove.kluent:kluent-android", version.ref = "kluentAndroid" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 reusableComponents = { group = "io.github.linx64", name = "reusablecomponents", version.ref = "reusable-components" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

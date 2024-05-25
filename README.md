@@ -20,6 +20,11 @@ I've also used one of my
 libraries, [Reusable Components for Jetpack Compose](https://github.com/LinX64/Reusable) to make the
 development faster.
 
+## Screenshots
+
+![vertical](screenshots/vertical.png)
+![horizontal](screenshots/horizontal.png)
+
 ## Features
 
 - Auto retry on network failure
@@ -28,4 +33,5 @@ development faster.
 - Dark mode
 - Error handling
 - Loading state with Progress Bar
-- Unit tests
+- Unit tests (just a couple of them to showcase the testing approach)
+- Instrumented tests

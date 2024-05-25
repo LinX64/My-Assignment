@@ -62,22 +62,29 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.hilt.android)
 
     implementation(libs.reusableComponents)
 
-    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp.logging)
+    implementation(libs.gson)
 
-    ksp(libs.hilt.compiler)
-    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+    testImplementation(libs.junit)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
+    testImplementation(libs.kluent.android)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

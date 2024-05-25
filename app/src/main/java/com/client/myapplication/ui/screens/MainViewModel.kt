@@ -8,16 +8,17 @@ import com.client.myapplication.domain.model.RateDto
 import com.client.myapplication.domain.repository.RatesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-   ratesRepository: RatesRepository
+    ratesRepository: RatesRepository
 ) : ViewModel() {
 
-    val rates = ratesRepository.getCurrenciesRates()
+    val rates: StateFlow<MainViewState> = ratesRepository.getCurrenciesRates()
         .asResult()
         .map { currencyRates ->
             when (currencyRates) {
@@ -42,13 +43,13 @@ class MainViewModel @Inject constructor(
         )
 }
 
-sealed class MainViewState {
-    data object Loading : MainViewState()
+sealed interface MainViewState {
+    data object Loading : MainViewState
 
     data class Success(
         val plnRates: List<RateDto>,
         val euroRates: List<RateDto>
-    ) : MainViewState()
+    ) : MainViewState
 
-    data class Error(val message: String) : MainViewState()
+    data class Error(val message: String) : MainViewState
 }

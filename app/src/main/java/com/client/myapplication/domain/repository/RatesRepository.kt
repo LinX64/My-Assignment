@@ -4,5 +4,5 @@ import com.client.myapplication.domain.model.CurrencyRatesDto
 import kotlinx.coroutines.flow.Flow
 
 interface RatesRepository {
-     fun getCurrenciesRates(): Flow<CurrencyRatesDto>
+    fun getCurrenciesRates(): Flow<CurrencyRatesDto>
 }
