@@ -8,12 +8,12 @@ import com.client.myapplication.domain.model.CurrencyRatesDto
 import com.client.myapplication.domain.repository.RatesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
@@ -45,7 +45,7 @@ class RatesRepositoryImpl @Inject constructor(
             }
         }
 
-    private suspend fun fetchCurrencyRates(): CurrencyRatesDto = coroutineScope {
+    private suspend fun fetchCurrencyRates(): CurrencyRatesDto = withContext(Dispatchers.IO) {
         val plnRatesDeferred = async { mapPlnRateToList() }
         val euroRatesDeferred = async { mapEuroRateToList() }
 

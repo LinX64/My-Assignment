@@ -28,6 +28,7 @@ import com.client.reusablecomponents.containers.CenteredColumn
 import com.client.reusablecomponents.containers.ScrollableScreen
 import com.client.reusablecomponents.previews.AppScreenComponent
 import com.client.reusablecomponents.previews.DevicePreviews
+import com.client.reusablecomponents.spacers.HorizontalSpacer
 
 @Composable
 internal fun HomeRoute(
@@ -45,79 +46,7 @@ internal fun HomeScreen(
 ) {
     val shouldShouldContent = rememberSaveable { mutableStateOf(true) }
     if (shouldShouldContent.value) {
-        ScrollableScreen {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.pln_rates),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text(
-                    text = stringResource(R.string._1_polish_zloty_equals_to),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                LazyHorizontalGrid(
-                    rows = GridCells.Fixed(1),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(170.dp)
-                        .testTag("list1"),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    if (rates is MainViewState.Success) {
-                        val plnRates = rates.plnRates
-                        items(plnRates.size) { index ->
-                            CurrencyItem(
-                                currency = plnRates[index].currency,
-                                rate = plnRates[index].rate,
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                Text(
-                    text = stringResource(R.string.euro_rates),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text(
-                    text = stringResource(R.string._1_euro_equals_to),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                LazyHorizontalGrid(
-                    rows = GridCells.Fixed(1),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(170.dp)
-                        .testTag("list2"),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    if (rates is MainViewState.Success) {
-                        val euroRates = rates.euroRates
-                        items(euroRates.size) { index ->
-                            CurrencyItem(
-                                currency = euroRates[index].currency,
-                                rate = euroRates[index].rate,
-                            )
-                        }
-                    }
-                }
-            }
-        }
+        ScrollableContent(rates)
     }
 
     when (rates) {
@@ -133,6 +62,83 @@ internal fun HomeScreen(
         }
 
         else -> Unit
+    }
+}
+
+@Composable
+private fun ScrollableContent(rates: MainViewState) {
+    ScrollableScreen {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(R.string.pln_rates),
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            Text(
+                text = stringResource(R.string._1_polish_zloty_equals_to),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(1),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(170.dp)
+                    .testTag("list1"),
+                contentPadding = PaddingValues(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (rates is MainViewState.Success) {
+                    val plnRates = rates.plnRates
+                    items(plnRates.size) { index ->
+                        CurrencyItem(
+                            currency = plnRates[index].currency,
+                            rate = plnRates[index].rate,
+                        )
+                    }
+                }
+            }
+
+            HorizontalSpacer()
+
+            Text(
+                text = stringResource(R.string.euro_rates),
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            Text(
+                text = stringResource(R.string._1_euro_equals_to),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            HorizontalSpacer()
+
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(1),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(170.dp)
+                    .testTag("list2"),
+                contentPadding = PaddingValues(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (rates is MainViewState.Success) {
+                    val euroRates = rates.euroRates
+                    items(euroRates.size) { index ->
+                        CurrencyItem(
+                            currency = euroRates[index].currency,
+                            rate = euroRates[index].rate,
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
