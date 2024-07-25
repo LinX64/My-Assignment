@@ -22,7 +22,6 @@ private interface CurrenciesApi {
     suspend fun getEuroRates(): EuroRates
 }
 
-@Singleton
 class RetrofitNetwork @Inject constructor(
     networkJson: Json,
     okhttpCallFactory: dagger.Lazy<Call.Factory>,

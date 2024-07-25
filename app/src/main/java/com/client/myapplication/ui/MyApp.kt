@@ -20,7 +20,7 @@ import com.client.myapplication.ui.screens.HomeRoute
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MyApp(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     Scaffold(
         containerColor = Color.Transparent,

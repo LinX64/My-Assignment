@@ -1,22 +1,25 @@
 package com.client.myapplication.data.repository
 
-import com.client.myapplication.data.model.CurrencyRates
 import com.client.myapplication.data.model.Rate
 import com.client.myapplication.data.model.toDomain
 import com.client.myapplication.data.source.NetworkDataSource
 import com.client.myapplication.domain.model.CurrencyRatesDto
+import com.client.myapplication.domain.model.RateDto
 import com.client.myapplication.domain.repository.RatesRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.retryWhen
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.minutes
 
 class RatesRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource
@@ -27,15 +30,15 @@ class RatesRepositoryImpl @Inject constructor(
      * This function fetches the PLN and Euro rates from the server and emits them every minute.
      * @return Flow<CurrencyRates> - a flow of CurrencyRates
      */
-    override fun getCurrenciesRates(): Flow<CurrencyRatesDto> = flow {
-        while (true) {
-            val rates = fetchCurrencyRates()
-            emit(rates)
-
-            delay(1.minutes)
+    @OptIn(ExperimentalCoroutinesApi::class, ObsoleteCoroutinesApi::class)
+    override fun getCurrenciesRates(): Flow<CurrencyRatesDto> = ticker(
+        delayMillis = RETRY_DELAY,
+        initialDelayMillis = 0,
+    )
+        .receiveAsFlow()
+        .flatMapLatest {
+            fetchCurrencyRates()
         }
-    }
-        .flowOn(Dispatchers.IO)
         .retryWhen { cause, attempt ->
             if (cause is IOException && attempt < MAX_RETRIES) {
                 delay(RETRY_DELAY)
@@ -45,25 +48,28 @@ class RatesRepositoryImpl @Inject constructor(
             }
         }
 
-    private suspend fun fetchCurrencyRates(): CurrencyRatesDto = withContext(Dispatchers.IO) {
-        val plnRatesDeferred = async { mapPlnRateToList() }
-        val euroRatesDeferred = async { mapEuroRateToList() }
-
-        val plnRates = plnRatesDeferred.await()
-        val euroRates = euroRatesDeferred.await()
-
-        CurrencyRates(plnRates, euroRates).toDomain()
+    private fun fetchCurrencyRates(): Flow<CurrencyRatesDto> = combine(
+        plnRatesFlow(),
+        euroRatesFlow()
+    ) { plnRates, euroRates ->
+        CurrencyRatesDto(plnRates, euroRates)
     }
 
-    private suspend fun mapPlnRateToList() = networkDataSource
-        .getPlnRates()
-        .conversion_rates
-        .map { (currency, rate) -> Rate(currency, rate).toDomain() }
+    private fun plnRatesFlow(): Flow<List<RateDto>> = flow {
+        val rate = networkDataSource
+            .getPlnRates()
+            .conversion_rates
+            .map { (currency, rate) -> Rate(currency, rate).toDomain() }
+        emit(rate)
+    }
 
-    private suspend fun mapEuroRateToList() = networkDataSource
-        .getEuroRates()
-        .conversion_rates
-        .map { (currency, rate) -> Rate(currency, rate).toDomain() }
+    private fun euroRatesFlow(): Flow<List<RateDto>> = flow {
+        val rate = networkDataSource
+            .getEuroRates()
+            .conversion_rates
+            .map { (currency, rate) -> Rate(currency, rate).toDomain() }
+        emit(rate)
+    }
 
     private companion object {
         private const val MAX_RETRIES = 20

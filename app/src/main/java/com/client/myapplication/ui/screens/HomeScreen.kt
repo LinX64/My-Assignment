@@ -44,24 +44,14 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     rates: MainViewState,
 ) {
-    val shouldShouldContent = rememberSaveable { mutableStateOf(true) }
-    if (shouldShouldContent.value) {
-        ScrollableContent(rates)
-    }
-
     when (rates) {
         is MainViewState.Loading -> CenteredColumn {
             CircularProgressIndicator(modifier = Modifier.testTag("loading"))
         }
 
-        is MainViewState.Error -> {
-            shouldShouldContent.value = false
-            ErrorView(
-                message = rates.message
-            )
-        }
+        is MainViewState.Error -> ErrorView(message = rates.message)
+        is MainViewState.Success -> ScrollableContent(rates)
 
-        else -> Unit
     }
 }
 
